@@ -25,15 +25,38 @@ var trivia = [{
 ];
 
 $(document).ready(function(){
-		
+	var guess = 0;
+// ////////// --- CREATES THE PAGES ELEMENTS --- ///////////////////////////////////
+	var youHave = $("<h1>");
+		youHave.attr("class", "timeText")
+		youHave.html("You have" + "  ");
+		$("#allIsHere").append(youHave);
+
+	var secondsTimer = $("<h1>");
+		secondsTimer.attr("class", "timeText");
+		$("#allIsHere").append(secondsTimer);
+
+	var secondsLeft = $("<h1>");
+		secondsLeft.attr("class", "timeText");
+		secondsLeft.html(" seconds left more");
+		$("#allIsHere").append(secondsLeft);
+
+	var questionContainer = $("<div>");
+		questionContainer.attr("class", "stuffHere");
+		$("#allIsHere").append(questionContainer);
+
+	var answersContainer = $("<div>");
+		answersContainer.attr("class", "stuffHere");
+		$("#allIsHere").append(answersContainer);
+	
 // ////////// --- CREATES THE QUESTION ELEMENT AND TEXT --- ////////////////////		
 		
 		function postQuestion(tr){
 		var playQuestion = $("<h1>");
 		playQuestion.html(trivia[tr].question);
-		$("#questionGoesHere").append(playQuestion);
+		questionContainer.append(playQuestion);
 		}
-								
+									
 // ////////// --- CREATES THE BUTTONS WITH ANSWERS  --- ////////////////////				
 		function fbutton1(tr){
 			var button1 = $("<button>");
@@ -53,44 +76,81 @@ $(document).ready(function(){
 		function createButton(bnum, an, tr) {
 			bnum.html(trivia[tr].answers[an]);
 			bnum.attr("id", "button"+an);
-			$("#buttonsHere").append(bnum);	 
+			bnum.attr("class", "answerButton");
+			answersContainer.append(bnum);
+			bnum.on("click", function(){
+				sorry();
+			});//close the on function
 		}
+				 
 
 		function rightAnswerFunc(tr){
 			var buttonRA = $("<button>");
 			buttonRA.html(trivia[tr].rightAnsw);
-			$("#buttonsHere").append(buttonRA);
+			buttonRA.attr("class", "answerButton");
+			answersContainer.append(buttonRA);
+			buttonRA.on("click", function(){
+				youNailIt();
+			});//close the on function
 		}
 
-// ////////// --- CALL ANY THE FUNCTIONS TO CONSTRUCT THE TRIVIA WITH NI TIMER  --- ////////////////////	
 		
-		function callTheQuestion(tr){
-			postQuestion(tr);
-			fbutton1(tr);
-			rightAnswerFunc(tr);
-			fbutton2(tr);
-			fbutton3(tr);
+
+// ////////// --- CALL ALL THE FUNCTIONS TO CONSTRUCT THE TRIVIA WITH NO TIMER  --- ////////////////////	
+		
+		function callTheQuestion(){
+			postQuestion(3);
 			displayTimer();
+			fbutton1(3);
+			rightAnswerFunc(3);
+			fbutton2(3);
+			fbutton3(3);
 		}
-	
+
 // ////////// --- THIS IS THE GAME TIMER  --- //////////////////////////////////////////////		
 				
- 		var timeLeft = 5;
-		$("#seconds").html(timeLeft);
+ 		var timeLeft = 30;
+		secondsTimer.html(timeLeft);
 
 		function displayTimer(){
 			var count = setInterval(countBack,1000);
 			function countBack(){
 				timeLeft --;
-				$("#seconds").html(timeLeft);
+				secondsTimer.html(timeLeft);
 				if(timeLeft == 0) {
 					clearInterval(count);
-					//$("#allIsHere").html("ITS OVER!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					timeIsOver();
 				}
 			}
 		}//end of displaytimer
 
-		
-callTheQuestion(1);
+function timeIsOver(){
+	$("#allIsHere").empty();
+	var noTimePicture = $("<img>");
+	noTimePicture.attr("src", "assets/images/notime.gif");
+	$("#allIsHere").append(noTimePicture);
+	setTimeout(callTheQuestion,2000);	
+}
+
+function youNailIt(){
+	$("#allIsHere").empty();
+	var noTimePicture = $("<img>");
+	noTimePicture.attr("src", "assets/images/right.gif");
+	$("#allIsHere").append(noTimePicture);
+	setTimeout(callTheQuestion,2000);
+}
+
+function sorry(){
+	$("#allIsHere").empty();
+	var noTimePicture = $("<img>");
+	noTimePicture.attr("src", "assets/images/giphy.gif");
+	$("#allIsHere").append(noTimePicture);
+	setTimeout(callTheQuestion,2000);
+}
+
+var starter = 2;
+callTheQuestion();
+
 
 });//end of readyfunction
+ 

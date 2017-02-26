@@ -1,0 +1,38 @@
+body{
+	background-image: url(../images/temple.jpg);
+	background-repeat: no-repeat;
+}
+
+#thecon{
+	width: 800px;
+	height: 320px;
+	background-color: #004097;
+	border-radius: 15px;
+	position: absolute;
+	top:30px;
+	left: 105px;
+	
+}
+
+#allIsHere{
+	width: 800px;
+	margin: auto;
+	position: absolute;
+	top:30px;
+	left: 20px;
+
+}
+
+.timeText {
+	color:red;
+	display:inline-block;
+}
+
+.stuffHere {
+	padding: 20px;
+	
+}
+
+.answerButton {
+	margin: 5px;
+}
