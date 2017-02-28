@@ -1,3 +1,4 @@
+
 var trivia = [{
 	question:"This Greek goddess sprang from the head of Zeus fully formed: and clad in armor",
 	rightAnsw: "Athena",
@@ -25,131 +26,236 @@ var trivia = [{
 ];
 
 $(document).ready(function(){
-	var guess = 0;
-// ////////// --- CREATES THE PAGES ELEMENTS --- ///////////////////////////////////
+	
+// 1. THE TIMER TEXTS ------ ////////////////////////////////////////////////
+
 	var youHave = $("<h1>");
-		youHave.attr("class", "timeText")
-		youHave.html("You have" + "  ");
-		$("#allIsHere").append(youHave);
+		youHave.attr("class", "screenTimerPart");
+		youHave.html("You have - ");
+		$("#screenTimerBox").append(youHave);
 
 	var secondsTimer = $("<h1>");
-		secondsTimer.attr("class", "timeText");
-		$("#allIsHere").append(secondsTimer);
+		secondsTimer.attr("class", "screenTimerPart");
+		$("#screenTimerBox").append(secondsTimer);
 
 	var secondsLeft = $("<h1>");
-		secondsLeft.attr("class", "timeText");
-		secondsLeft.html(" seconds left more");
-		$("#allIsHere").append(secondsLeft);
+		secondsLeft.attr("class", "screenTimerPart");
+		secondsLeft.html("- seconds left.");
+		$("#screenTimerBox").append(secondsLeft);
 
-	var questionContainer = $("<div>");
-		questionContainer.attr("class", "stuffHere");
-		$("#allIsHere").append(questionContainer);
-
-	var answersContainer = $("<div>");
-		answersContainer.attr("class", "stuffHere");
-		$("#allIsHere").append(answersContainer);
-	
-// ////////// --- CREATES THE QUESTION ELEMENT AND TEXT --- ////////////////////		
+//  2. CREATES THE QUESTION  TEXT ------ //////////////////////////////		
 		
 		function postQuestion(tr){
-		var playQuestion = $("<h1>");
-		playQuestion.html(trivia[tr].question);
-		questionContainer.append(playQuestion);
+			var playQuestion = $("<h1>");
+			playQuestion.html(trivia[tr].question);
+			$("#textQuestBox").append(playQuestion);
 		}
-									
-// ////////// --- CREATES THE BUTTONS WITH ANSWERS  --- ////////////////////				
-		function fbutton1(tr){
+								
+//  3. CREATES THE BUTTONS WITH ANSWERS TEXT AND REACTION EVENT  ------ //////////////////////////////				
+	
+		function fbutton1(tr,qId){
 			var button1 = $("<button>");
-			createButton(button1, 0, tr);
+			qId.answers(button1, 0, tr);
 		}
 		
-		function fbutton2(tr){
+		function fbutton2(tr,qId){
 			var button2 = $("<button>");
-			createButton(button2, 1, tr);
+			qId.answers(button2, 1, tr);
 		}
 
-		function fbutton3(tr){
+		function fbutton3(tr,qId){
 			var button3 = $("<button>");
-			createButton(button3, 2, tr);
+			qId.answers(button3, 2, tr);
 		}
 
 		function createButton(bnum, an, tr) {
 			bnum.html(trivia[tr].answers[an]);
 			bnum.attr("id", "button"+an);
 			bnum.attr("class", "answerButton");
-			answersContainer.append(bnum);
+			$("#buttonsBox").append(bnum);
 			bnum.on("click", function(){
-				sorry();
+				qId.rightGuess();
 			});//close the on function
 		}
 				 
-
-		function rightAnswerFunc(tr){
+		function createRAButton(tr,qId){
 			var buttonRA = $("<button>");
 			buttonRA.html(trivia[tr].rightAnsw);
 			buttonRA.attr("class", "answerButton");
-			answersContainer.append(buttonRA);
+			$("#buttonsBox").append(buttonRA);
 			buttonRA.on("click", function(){
-				youNailIt();
+				qId.rightGuess();
+				
 			});//close the on function
 		}
 
-		
 
-// ////////// --- CALL ALL THE FUNCTIONS TO CONSTRUCT THE TRIVIA WITH NO TIMER  --- ////////////////////	
-		
-		function callTheQuestion(){
-			postQuestion(3);
-			displayTimer();
-			fbutton1(3);
-			rightAnswerFunc(3);
-			fbutton2(3);
-			fbutton3(3);
-		}
-
-// ////////// --- THIS IS THE GAME TIMER  --- //////////////////////////////////////////////		
-				
- 		var timeLeft = 30;
+// ////////// --- THIS IS THE SCREEN TIMER  --- //////////////////////////////////////////////		
+			
+ 		var timeLeft = 7;
 		secondsTimer.html(timeLeft);
 
-		function displayTimer(){
+		function screenTimer(){
 			var count = setInterval(countBack,1000);
 			function countBack(){
 				timeLeft --;
 				secondsTimer.html(timeLeft);
 				if(timeLeft == 0) {
 					clearInterval(count);
-					timeIsOver();
+					timeLeft =7;
 				}
 			}
 		}//end of displaytimer
 
+// ////////////////--- GUESS RESPONSES ////////////////////////////////////////////
 function timeIsOver(){
-	$("#allIsHere").empty();
 	var noTimePicture = $("<img>");
 	noTimePicture.attr("src", "assets/images/notime.gif");
-	$("#allIsHere").append(noTimePicture);
-	setTimeout(callTheQuestion,2000);	
-}
+	$("#gifsBox").append(noTimePicture);
+	}
 
 function youNailIt(){
-	$("#allIsHere").empty();
 	var noTimePicture = $("<img>");
 	noTimePicture.attr("src", "assets/images/right.gif");
-	$("#allIsHere").append(noTimePicture);
-	setTimeout(callTheQuestion,2000);
+	$("#gifsBox").append(noTimePicture);
 }
 
 function sorry(){
-	$("#allIsHere").empty();
 	var noTimePicture = $("<img>");
 	noTimePicture.attr("src", "assets/images/giphy.gif");
-	$("#allIsHere").append(noTimePicture);
-	setTimeout(callTheQuestion,2000);
+	$("#gifsBox").append(noTimePicture);
 }
 
-var starter = 2;
-callTheQuestion();
+
+// ///////////////////////// OBJECTS /////////////////////////////////////////
+var questionOne = {
+		index: 0,
+
+		game: function (){
+						//this.triviaTimer ();
+						postQuestion(0);
+						screenTimer();
+						fbutton1(0, questionOne);
+						createRAButton(0, questionOne);
+						fbutton2(0, questionOne);
+						fbutton3(0, questionOne);
+						//guess reaccion();
+						//nextquestion();
+					},
+
+		answers: function (bnum, an, tr) {
+						bnum.html(trivia[tr].answers[an]);
+						bnum.attr("id", "button"+an);
+						bnum.attr("class", "answerButton");
+						$("#buttonsBox").append(bnum);
+						bnum.on("click", function(){
+							questionOne.wrongGuess();
+						});//close the on function
+					},
+
+		rightGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						youNailIt();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionTwo.game();
+							}, 3000);
+						},
+		
+		wrongGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						sorry();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionTwo.game();
+							}, 3000);
+					},
+
+		yourDone: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						timeIsOver();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionTwo.game();
+							}, 3000);
+					},
+
+
+
+		triviaTimer: function(){
+						setTimeout(this.yourDone(),90000)
+					}
+
+	}; //end of the object questionOne
+
+
+var questionTwo = {
+		index: 1,
+		game: function launch(){
+						postQuestion(1);
+						screenTimer();
+						fbutton1(1, questionTwo);
+						fbutton2(1, questionTwo);
+						fbutton3(1, questionTwo);
+						createRAButton(1, questionTwo);
+						//gameTimer ();
+						//guess reaccion();
+						//nextquestion();
+					},
+
+		answers: function (bnum, an, tr) {
+						bnum.html(trivia[tr].answers[an]);
+						bnum.attr("id", "button"+an);
+						bnum.attr("class", "answerButton");
+						$("#buttonsBox").append(bnum);
+						bnum.on("click", function(){
+							questionTwo.wrongGuess();
+						});//close the on function
+					},
+
+		rightGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						youNailIt();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionThree.game();
+							}, 3000);
+						},
+		wrongGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						sorry();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionThree.game();
+							}, 3000);
+		}
+		
+	}; //end of the object questiontwo;
+
+var questionThree = {
+		index: 2,
+		game: function launch(){
+						postQuestion(2);
+						screenTimer();
+						createRAButton(2, questionThree);
+						fbutton1(2, questionThree);
+						fbutton2(2, questionThree);
+						fbutton3(2, questionThree);
+						//gameTimer ();
+						//guess reaccion();
+						//nextquestion();
+					}
+}; //end of the object questiontwo;
+
+
+
+questionOne.game();
+//questionOne.rightGuess();
 
 
 });//end of readyfunction

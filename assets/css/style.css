@@ -3,36 +3,51 @@ body{
 	background-repeat: no-repeat;
 }
 
-#thecon{
-	width: 800px;
-	height: 320px;
-	background-color: #004097;
-	border-radius: 15px;
-	position: absolute;
-	top:30px;
-	left: 105px;
-	
-}
 
-#allIsHere{
-	width: 800px;
+
+#container{
+	width: 960px;
+	height: 720px;
+	background-color: rgba(0, 0, 0, 0.8);
 	margin: auto;
-	position: absolute;
-	top:30px;
-	left: 20px;
-
+	border-radius: 20px;
 }
 
-.timeText {
-	color:red;
-	display:inline-block;
+#niceLine {
+	background-color: red;
+	height: 20px;
 }
 
-.stuffHere {
-	padding: 20px;
+#screenTimerBox {
+	color: red;
+	padding-left: 15px;
+	display: inline-block;
 	
+}
+
+.screenTimerPart {
+	display: inline-block;
+}
+
+#textQuestBox {
+	color: white;
+	padding: 0px 15px 0px 15px;
+}
+
+#buttonsBox{
+	padding: 0px 15px 0px 15px;
+	text-align: center;
 }
 
 .answerButton {
-	margin: 5px;
+	padding: 5px;
+	margin: 0px 15px 0px 15px;
+	width: 100px;
+	border-radius: 5px;
 }
+
+#gifsBox{
+	padding: 30px;
+	text-align: center;
+}
+
