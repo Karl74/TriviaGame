@@ -125,23 +125,23 @@ function sorry(){
 	noTimePicture.attr("src", "assets/images/giphy.gif");
 	$("#gifsBox").append(noTimePicture);
 }
-
+function sayHi(){
+	console.log("hi guys!!!");
+}
 
 // ///////////////////////// OBJECTS /////////////////////////////////////////
 var questionOne = {
 		index: 0,
 
 		game: function (){
-						//this.triviaTimer ();
+						this.triviaTimer ();
 						postQuestion(0);
 						screenTimer();
 						fbutton1(0, questionOne);
 						createRAButton(0, questionOne);
 						fbutton2(0, questionOne);
 						fbutton3(0, questionOne);
-						//guess reaccion();
-						//nextquestion();
-					},
+			},
 
 		answers: function (bnum, an, tr) {
 						bnum.html(trivia[tr].answers[an]);
@@ -151,7 +151,7 @@ var questionOne = {
 						bnum.on("click", function(){
 							questionOne.wrongGuess();
 						});//close the on function
-					},
+			},
 
 		rightGuess: function(){
 						$("#textQuestBox").empty();
@@ -183,10 +183,10 @@ var questionOne = {
 							}, 3000);
 					},
 
-
-
 		triviaTimer: function(){
-						setTimeout(this.yourDone(),90000)
+						setTimeout(function(){
+							questionOne.yourDone();
+						},8000);
 					}
 
 	}; //end of the object questionOne
@@ -195,15 +195,13 @@ var questionOne = {
 var questionTwo = {
 		index: 1,
 		game: function launch(){
+						this.triviaTimer ();
 						postQuestion(1);
 						screenTimer();
 						fbutton1(1, questionTwo);
 						fbutton2(1, questionTwo);
 						fbutton3(1, questionTwo);
 						createRAButton(1, questionTwo);
-						//gameTimer ();
-						//guess reaccion();
-						//nextquestion();
 					},
 
 		answers: function (bnum, an, tr) {
@@ -225,6 +223,7 @@ var questionTwo = {
 							questionThree.game();
 							}, 3000);
 						},
+
 		wrongGuess: function(){
 						$("#textQuestBox").empty();
 						$("#buttonsBox").empty();
@@ -233,25 +232,199 @@ var questionTwo = {
 							$("#gifsBox").empty();
 							questionThree.game();
 							}, 3000);
-		}
-		
+		},
+		yourDone: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						timeIsOver();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionThree.game();
+							}, 3000);
+					},
+
+		triviaTimer: function(){
+						setTimeout(function(){
+							questionTwo.yourDone();
+						},8000);
+					}
+
 	}; //end of the object questiontwo;
 
 var questionThree = {
 		index: 2,
 		game: function launch(){
+						this.triviaTimer ();
 						postQuestion(2);
 						screenTimer();
-						createRAButton(2, questionThree);
-						fbutton1(2, questionThree);
-						fbutton2(2, questionThree);
-						fbutton3(2, questionThree);
-						//gameTimer ();
-						//guess reaccion();
-						//nextquestion();
-					}
-}; //end of the object questiontwo;
+						fbutton1(2, questionTwo);
+						fbutton2(2, questionTwo);
+						fbutton3(2, questionTwo);
+						createRAButton(2, questionTwo);
+					},
 
+		answers: function (bnum, an, tr) {
+						bnum.html(trivia[tr].answers[an]);
+						bnum.attr("id", "button"+an);
+						bnum.attr("class", "answerButton");
+						$("#buttonsBox").append(bnum);
+						bnum.on("click", function(){
+							questionThree.wrongGuess();
+						});//close the on function
+					},
+
+		rightGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						youNailIt();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfour.game();
+							}, 3000);
+						},
+
+		wrongGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						sorry();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfour.game();
+							}, 3000);
+		},
+		yourDone: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						timeIsOver();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfour.game();
+							}, 3000);
+					},
+
+		triviaTimer: function(){
+						setTimeout(function(){
+							questionTree.yourDone();
+						},8000);
+					}
+}; //end of the object questionthree;
+
+
+var questionfour = {
+		index: 3,
+		game: function launch(){
+						this.triviaTimer ();
+						postQuestion(3);
+						screenTimer();
+						fbutton1(3, questionTwo);
+						fbutton2(3, questionTwo);
+						fbutton3(3, questionTwo);
+						createRAButton(3, questionTwo);
+					},
+
+		answers: function (bnum, an, tr) {
+						bnum.html(trivia[tr].answers[an]);
+						bnum.attr("id", "button"+an);
+						bnum.attr("class", "answerButton");
+						$("#buttonsBox").append(bnum);
+						bnum.on("click", function(){
+							questionfour.wrongGuess();
+						});//close the on function
+					},
+
+		rightGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						youNailIt();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.game();
+							}, 3000);
+						},
+
+		wrongGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						sorry();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.game();
+							}, 3000);
+		},
+		yourDone: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						timeIsOver();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.game();
+							}, 3000);
+					},
+
+		triviaTimer: function(){
+						setTimeout(function(){
+							questionfour.yourDone();
+						},8000);
+					}
+}; //end of the object questionfour;
+
+var questionfive = {
+		index: 4,
+		game: function launch(){
+						this.triviaTimer ();
+						postQuestion(4);
+						screenTimer();
+						fbutton1(4, questionTwo);
+						fbutton2(4, questionTwo);
+						fbutton3(4, questionTwo);
+						createRAButton(4, questionTwo);
+					},
+
+		answers: function (bnum, an, tr) {
+						bnum.html(trivia[tr].answers[an]);
+						bnum.attr("id", "button"+an);
+						bnum.attr("class", "answerButton");
+						$("#buttonsBox").append(bnum);
+						bnum.on("click", function(){
+							questionfive.wrongGuess();
+						});//close the on function
+					},
+
+		rightGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						youNailIt();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.end();
+							}, 3000);
+						},
+
+		wrongGuess: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						sorry();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.end();
+							}, 3000);
+		},
+		yourDone: function(){
+						$("#textQuestBox").empty();
+						$("#buttonsBox").empty();
+						timeIsOver();
+						setTimeout(function(){
+							$("#gifsBox").empty();
+							questionfive.end();
+							}, 3000);
+					},
+
+		triviaTimer: function(){
+						setTimeout(function(){
+							questionfive.yourDone();
+						},8000);
+					}
+}; //end of the object questionfour;
 
 
 questionOne.game();
